@@ -180,10 +180,12 @@ CREATE TABLE IF NOT EXISTS schedule (
     id UUID PRIMARY KEY,
     professor_id UUID NOT NULL,
     course_id UUID NOT NULL,
+    classroom_id UUID NOT NULL,
     begins_at TIMESTAMP WITH TIME ZONE NOT NULL,
     ends_at TIMESTAMP WITH TIME ZONE NOT NULL,
     FOREIGN KEY (professor_id) REFERENCES professors(id) ON DELETE CASCADE,
-    FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE
+    FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE,
+    FOREIGN KEY (classroom_id) REFERENCES classrooms(id) ON DELETE CASCADE
 );
 
 
