@@ -159,6 +159,7 @@ CREATE TABLE IF NOT EXISTS grades (
     id UUID PRIMARY KEY,
     student_id UUID NOT NULL,
     exam_id UUID NOT NULL,
+    grade INTEGER NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL,
     FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE,
     FOREIGN KEY (exam_id) REFERENCES exams(id) ON DELETE CASCADE
