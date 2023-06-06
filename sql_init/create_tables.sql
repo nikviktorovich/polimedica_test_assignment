@@ -45,8 +45,8 @@ CREATE TABLE IF NOT EXISTS faculties (
 CREATE TABLE IF NOT EXISTS semesters (
     id UUID PRIMARY KEY,
     semester_number INTEGER UNIQUE NOT NULL,
-    begins_at TIMESTAMP WITH TIME ZONE NOT NULL,
-    ends_at TIMESTAMP WITH TIME ZONE NOT NULL
+    begins_at DATE NOT NULL,
+    ends_at DATE NOT NULL
 );
 
 
