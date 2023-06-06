@@ -117,7 +117,9 @@ CREATE TABLE IF NOT EXISTS buildings (
 */
 CREATE TABLE IF NOT EXISTS classrooms (
     id UUID PRIMARY KEY,
-    code VARCHAR(50) UNIQUE NOT NULL
+    code VARCHAR(50) UNIQUE NOT NULL,
+    building_id UUID NOT NULL,
+    FOREIGN KEY (building_id) REFERENCES buildings(id)
 );
 
 
