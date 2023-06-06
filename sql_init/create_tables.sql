@@ -153,6 +153,7 @@ CREATE TABLE IF NOT EXISTS exams (
         id: Идентификатор оценки
         student_id: Идентификатор студента
         exam_id: Идентификатор экзамена
+        grade: Оценка студента
         created_at: Дата выставления оценки
 */
 CREATE TABLE IF NOT EXISTS grades (
@@ -172,6 +173,7 @@ CREATE TABLE IF NOT EXISTS grades (
         id: Идентификатор записи
         professor_id: Идентификатор преподавателя
         course_id: Идентификатор курса
+        classroom_id: Идентификатор аудитории
         begins_at: Дата и время начала занятия
         ends_at: Дата и время окончания занятия
 
