@@ -138,7 +138,7 @@ CREATE TABLE IF NOT EXISTS exams (
     group_id UUID NOT NULL,
     classroom_id UUID NOT NULL,
     begins_at TIMESTAMP WITH TIME ZONE NOT NULL,
-    FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE,
+    FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE,
     FOREIGN KEY (professor_id) REFERENCES professors(id) ON DELETE CASCADE,
     FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE,
     FOREIGN KEY (classroom_id) REFERENCES classrooms(id) ON DELETE CASCADE
