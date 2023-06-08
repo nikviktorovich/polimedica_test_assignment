@@ -4,7 +4,7 @@ import sqlalchemy.engine
 from fastapi import Depends
 
 import university.config
-from university.service import unit_of_work
+from university.services import unit_of_work
 
 
 def get_db_engine() -> sqlalchemy.engine.Engine:

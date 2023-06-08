@@ -1,7 +1,7 @@
-import university.service.unit_of_work
+import university.services.unit_of_work
 
 
-class FakeUOW(university.service.unit_of_work.UnitOfWork):
+class FakeUOW(university.services.unit_of_work.UnitOfWork):
     """Тестовая единица работы"""
     def __init__(self, **repos) -> None:
         """Инициализирует тестовую единицу работы
@@ -23,7 +23,7 @@ class FakeUOW(university.service.unit_of_work.UnitOfWork):
         pass
     
 
-    def __enter__(self) -> university.service.unit_of_work.UnitOfWork:
+    def __enter__(self) -> university.services.unit_of_work.UnitOfWork:
         """Инициализирует репозитории при входе в контекст"""
         return self
     

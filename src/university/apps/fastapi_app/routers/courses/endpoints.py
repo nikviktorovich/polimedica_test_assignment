@@ -9,7 +9,7 @@ from fastapi import status
 import university.modules.education.domain.services as domain_services
 from university.apps.fastapi_app import deps
 from university.apps.fastapi_app.routers.courses import serializers
-from university.service import unit_of_work
+from university.services import unit_of_work
 
 
 router = fastapi.routing.APIRouter(prefix='/courses')
