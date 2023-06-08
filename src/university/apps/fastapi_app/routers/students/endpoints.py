@@ -57,3 +57,17 @@ def get_student(
         full_name=student.full_name,
         group_id=student.group_id,
     )
+
+
+@router.get('/')
+def list_students_by_course(
+    course_id: uuid.UUID,
+    uow: unit_of_work.UnitOfWork = Depends(deps.get_uow),
+):
+    """Возвращает список студентов с указанным курсом в текущем семестре
+    
+    Аргументы:
+        course_id: Идентификатор курса
+    """
+    students = uow.students.list_by_course(course_id)
+    return students

@@ -46,3 +46,18 @@ def get_course(
         id=course.id,
         title=course.title,
     )
+
+
+@router.get('/{course_id}/students')
+def list_course_students(
+    course_id: uuid.UUID,
+):
+    """Возвращает список студентов с указанным курсом в текущем семестре
+    
+    Аргументы:
+        course_id: Идентификатор курса
+    """
+    return fastapi.responses.RedirectResponse(
+        url=f'/students/?course_id={course_id}',
+        status_code=status.HTTP_303_SEE_OTHER,
+    )

@@ -4,6 +4,7 @@ from typing import List
 import sqlalchemy.orm
 
 import university.common.errors
+import university.modules.organizing.domain.models
 from university.modules.education.domain import models as domain_models
 
 
@@ -21,6 +22,14 @@ class StudentRepository:
 
     def add(self, student: domain_models.Student) -> domain_models.Student:
         """Добавляет указанного студента в репозиторий"""
+        raise NotImplementedError()
+    
+
+    def list_by_course(
+        self,
+        course_id: uuid.UUID,
+    ) -> List[domain_models.Student]:
+        """Возвращает список студентов с указанным курсом в семестре"""
         raise NotImplementedError()
 
 
@@ -71,3 +80,17 @@ class SQLAlchemyStudentRepository(StudentRepository):
         """Добавляет указанного студента в репозиторий"""
         self.session.add(student)
         return student
+    
+
+    def list_by_course(
+        self,
+        course_id: uuid.UUID,
+    ) -> List[domain_models.Student]:
+        """Возвращает список студентов с указанным курсом в семестре"""
+        q = self.session.query(domain_models.Student)
+        q = q.join(domain_models.Group)
+        q = q.join(university.modules.organizing.domain.models.Syllabus)
+        q = q.join(domain_models.Semester)
+        q = q.join(domain_models.Course).filter_by(id=course_id)
+        
+        return q.all()
