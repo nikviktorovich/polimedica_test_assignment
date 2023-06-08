@@ -14,7 +14,6 @@ def fastapi_app() -> Iterator[fastapi.FastAPI]:
 
 
 @pytest.fixture(scope='function')
-def test_client(fastapi_app) -> Iterator[fastapi.testclient.TestClient]:
+def test_client(fastapi_app) -> fastapi.testclient.TestClient:
     client = fastapi.testclient.TestClient(app=fastapi_app)
-    with client:
-        yield client
+    return client
