@@ -71,3 +71,34 @@ def list_students_by_course(
     """
     students = uow.students.list_by_course(course_id)
     return students
+
+
+@router.put('/{student_id}')
+def update_student(
+    student_id: uuid.UUID,
+    student_data: serializers.StudentUpdate,
+    request: fastapi.Request,
+    uow: unit_of_work.UnitOfWork = Depends(deps.get_uow),
+):
+    """Обновляет данные студента указанными
+    
+    Аргументы:
+        student_id: Идентификатор студента
+    """
+    # В случае отсутствия группы в репозитории будет выброшено исключение
+    group = uow.groups.get(group_id=student_data.group_id)
+
+    student_service = domain_services.StudentService(uow.students)
+    student = student_service.add_student(
+        full_name=student_data.full_name,
+        group=group,
+        student_id=student_id,
+    )
+    uow.commit()
+
+    redirect_url = request.url_for('get_student', student_id=student.id)
+
+    return fastapi.responses.RedirectResponse(
+        url=redirect_url,
+        status_code=status.HTTP_303_SEE_OTHER,
+    )

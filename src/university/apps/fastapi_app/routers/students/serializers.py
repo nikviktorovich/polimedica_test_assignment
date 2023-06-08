@@ -15,6 +15,11 @@ class StudentCreate(StudentBase):
     pass
 
 
+class StudentUpdate(StudentCreate):
+    """Сериализатор изменения данных экземпляра студента"""
+    pass
+
+
 class StudentRead(StudentBase):
     """Сериализатор получения данных о студенте"""
     id: uuid.UUID
