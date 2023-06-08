@@ -5,6 +5,7 @@ import fastapi.responses
 from fastapi import status
 
 import university.common.errors
+import university.apps.fastapi_app.routers.courses
 
 
 logger = logging.getLogger(__name__)
@@ -30,3 +31,5 @@ def global_exception_handler(request: fastapi.Request, exception: Exception):
         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
     )
 
+
+app.include_router(university.apps.fastapi_app.routers.courses.router)
