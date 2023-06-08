@@ -14,12 +14,12 @@ class CourseService:
     
 
     def add_course(self, title: str) -> domain_models.Course:
+        """Добавляет курс в репозиторий
+        
+        Аргументы:
+            title: Наименование курса
+        """
         instance_id = uuid.uuid4()
         instance = domain_models.Course(id=instance_id, title=title)
         instance = self.repo.add(instance)
-        return instance
-    
-
-    def get_course(self, course_id: uuid.UUID) -> domain_models.Course:
-        instance = self.repo.get(course_id=course_id)
         return instance

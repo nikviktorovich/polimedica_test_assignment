@@ -40,8 +40,7 @@ def get_course(
     uow: unit_of_work.UnitOfWork = Depends(deps.get_uow),
 ):
     """Маршрут получения экземпляра курса по его ID"""
-    course_service = domain_services.CourseService(uow.courses)
-    course = course_service.get_course(course_id=course_id)
+    course = uow.courses.get(course_id=course_id)
 
     return serializers.CourseRead(
         id=course.id,
