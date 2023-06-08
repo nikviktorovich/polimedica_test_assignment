@@ -1,3 +1,4 @@
+import contextlib
 import logging
 
 import fastapi
@@ -7,10 +8,17 @@ from fastapi import status
 import university.common.errors
 import university.apps.fastapi_app.routers.courses
 import university.apps.fastapi_app.routers.students
+import university.database.mappers
+
+
+@contextlib.asynccontextmanager
+async def lifespan(app: fastapi.FastAPI):
+    university.database.mappers.start_mappers()
+    yield
 
 
 logger = logging.getLogger(__name__)
-app = fastapi.FastAPI()
+app = fastapi.FastAPI(lifespan=lifespan)
 
 
 @app.exception_handler(university.common.errors.EntityNotFoundError)
