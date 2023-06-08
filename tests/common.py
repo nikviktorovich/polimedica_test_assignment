@@ -54,7 +54,7 @@ class FakeCourseRepository(
 
 class FakeUOW(university.service.unit_of_work.UnitOfWork):
     """Тестовая единица работы"""
-    def __init__(self, repos: Dict[str, Any]) -> None:
+    def __init__(self, **repos) -> None:
         """Инициализирует тестовую единицу работы
         
         Аргументы:

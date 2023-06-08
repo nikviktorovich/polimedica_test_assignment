@@ -19,7 +19,7 @@ def test_course_endpoint_get_course(
     """Тестирует маршрут получения экземпляра курса по ID"""
     course = domain_models.Course(id=uuid.uuid4(), title='Some title')
     course_repo = common.FakeCourseRepository([course])
-    uow = common.FakeUOW({'courses': course_repo})
+    uow = common.FakeUOW(courses=course_repo)
     fastapi_app.dependency_overrides[deps.get_uow] = lambda: uow
 
     resp = test_client.get(f'/courses/{course.id.hex}')
@@ -34,7 +34,7 @@ def test_course_endpoint_add_course(
 ):
     """Тестирует маршрут создания экземпляра курса"""
     course_repo = common.FakeCourseRepository([])
-    uow = common.FakeUOW({'courses': course_repo})
+    uow = common.FakeUOW(courses=course_repo)
     fastapi_app.dependency_overrides[deps.get_uow] = lambda: uow
 
     resp = test_client.post('/courses', json={'title': 'Some title'})
