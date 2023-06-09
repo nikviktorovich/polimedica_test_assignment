@@ -23,7 +23,6 @@ class StudentService:
         self,
         full_name: str,
         group: domain_models.Group,
-        student_id: Optional[uuid.UUID] = None,
     ) -> domain_models.Student:
         """Добавляет студента в репозиторий
         
@@ -31,9 +30,7 @@ class StudentService:
             full_name: ФИО студента
             group: Экземпляр группы студента
         """
-        if student_id is None:
-            student_id = uuid.uuid4()
-        
+        student_id = uuid.uuid4()
         instance = domain_models.Student(
             id=student_id,
             full_name=full_name,
@@ -42,3 +39,25 @@ class StudentService:
         )
         instance = self.repo.add(instance)
         return instance
+    
+
+    def update_student(
+        self,
+        student_id: uuid.UUID,
+        full_name: str,
+        group: domain_models.Group,
+    ) -> domain_models.Student:
+        """Обновляет данные студента указанными
+        
+        Исключения:
+            EntityNotFoundError: Если студент с указанным id не найден
+        
+        Возвращает:
+            Обновленный экземпляр студента
+        """
+        student = self.repo.get(student_id)
+        student.full_name = full_name
+        student.group = group
+        student.group_id = group.id
+
+        return student

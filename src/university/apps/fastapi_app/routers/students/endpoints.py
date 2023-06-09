@@ -70,7 +70,17 @@ def list_students_by_course(
         course_id: Идентификатор курса
     """
     students = uow.students.list_by_course(course_id)
-    return students
+
+    student_serializers = []
+    for student in students:
+        serializer = serializers.StudentRead(
+            id=student.id,
+            full_name=student.full_name,
+            group_id=student.group_id,
+        )
+        student_serializers.append(serializer)
+
+    return student_serializers
 
 
 @router.put('/{student_id}')
@@ -88,11 +98,12 @@ def update_student(
     # В случае отсутствия группы в репозитории будет выброшено исключение
     group = uow.groups.get(group_id=student_data.group_id)
 
+    # В случае отсутствия студента с указанным id будет выброшено исключение
     student_service = domain_services.StudentService(uow.students)
-    student = student_service.add_student(
+    student = student_service.update_student(
+        student_id=student_id,
         full_name=student_data.full_name,
         group=group,
-        student_id=student_id,
     )
     uow.commit()
 
