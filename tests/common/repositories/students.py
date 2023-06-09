@@ -48,3 +48,11 @@ class FakeStudentRepository(
         """Добавляет указанного студента в репозиторий"""
         self.data[student.id] = student
         return student
+    
+
+    def delete(
+        self,
+        student: university.modules.education.domain.models.Student,
+    ) -> None:
+        """Удаляет указанного студента из репозитория"""
+        del self.data[student.id]

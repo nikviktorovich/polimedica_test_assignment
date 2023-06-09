@@ -31,6 +31,11 @@ class StudentRepository:
     ) -> List[domain_models.Student]:
         """Возвращает список студентов с указанным курсом в семестре"""
         raise NotImplementedError()
+    
+
+    def delete(self, student: domain_models.Student) -> None:
+        """Удаляет указанного студента из репозитория"""
+        raise NotImplementedError()
 
 
 class SQLAlchemyStudentRepository(StudentRepository):
@@ -94,3 +99,8 @@ class SQLAlchemyStudentRepository(StudentRepository):
         q = q.join(domain_models.Course).filter_by(id=course_id)
         
         return q.all()
+    
+
+    def delete(self, student: domain_models.Student) -> None:
+        """Удаляет указанного студента из репозитория"""
+        self.session.delete(student)

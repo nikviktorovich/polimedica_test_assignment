@@ -122,3 +122,29 @@ def test_student_endpoint_update_student(
     })
     assert resp.status_code == status.HTTP_200_OK
     assert resp.json()['full_name'] == 'Some New Student'
+
+
+@pytest.mark.usefixtures('fastapi_app', 'test_client')
+def test_student_endpoint_delete_student(
+    fastapi_app: fastapi.FastAPI,
+    test_client: TestClient,
+):
+    """Тестирует удаление данных студента"""
+    student = domain_models.Student(
+        id=uuid.uuid4(),
+        full_name='Some Student',
+        group_id=None, # type: ignore
+        group=None, # type: ignore
+    )
+    student_repo = common.FakeStudentRepository([student])
+
+    uow = common.FakeUOW(students=student_repo)
+    fastapi_app.dependency_overrides[deps.get_uow] = lambda: uow
+
+    # Удаление существующей записи
+    resp = test_client.delete(f'/students/{student.id}')
+    assert resp.status_code == status.HTTP_204_NO_CONTENT
+
+    # Удаление несуществующей записи
+    resp = test_client.delete(f'/students/{student.id}')
+    assert resp.status_code == status.HTTP_404_NOT_FOUND

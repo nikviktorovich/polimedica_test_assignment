@@ -113,3 +113,18 @@ def update_student(
         url=redirect_url,
         status_code=status.HTTP_303_SEE_OTHER,
     )
+
+
+@router.delete('/{student_id}', status_code=status.HTTP_204_NO_CONTENT)
+def delete_student(
+    student_id: uuid.UUID,
+    uow: unit_of_work.UnitOfWork = Depends(deps.get_uow),
+):
+    """Удаляет из базы данных студента с указанным id
+    
+    Аргументы:
+        student_id: Идентификатор студента
+    """
+    # В случае отсутствия студента с указанным id будет выброшено исключение
+    student = uow.students.get(student_id)
+    uow.students.delete(student)
