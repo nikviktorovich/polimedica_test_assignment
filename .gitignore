@@ -5,3 +5,4 @@ __pycache__
 db_data/
 *.egg-info
 *.env
+sql_seed/
