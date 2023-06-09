@@ -21,3 +21,8 @@ class GradeRead(GradeBase):
     """Сериализатор вывода оценки"""
     id: uuid.UUID
     created_at: datetime.datetime
+
+
+class GradeUpdate(GradeCreate):
+    """Сериализатор обновления информации оценки"""
+    pass
