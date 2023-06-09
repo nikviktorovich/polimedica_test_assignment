@@ -125,6 +125,33 @@ def test_student_endpoint_update_student(
 
 
 @pytest.mark.usefixtures('fastapi_app', 'test_client')
+def test_student_endpoint_update_nonexisting_student(
+    fastapi_app: fastapi.FastAPI,
+    test_client: TestClient,
+):
+    """Тестирует обновление данных несуществующего студента"""
+    group = domain_models.Group(
+        id=uuid.uuid4(),
+        faculty_id=uuid.uuid4(),
+        semester_id=uuid.uuid4(),
+        code='somecode',
+        faculty=None,   # type: ignore
+        semester=None,  # type: ignore
+    )
+    group_repo = common.FakeGroupRepository([group])
+    student_repo = common.FakeStudentRepository([])
+    uow = common.FakeUOW(students=student_repo, groups=group_repo)
+    fastapi_app.dependency_overrides[deps.get_uow] = lambda: uow
+
+    student_id = uuid.uuid4()
+    resp = test_client.put(f'/students/{student_id}', json={
+        'full_name': 'Some New Student',
+        'group_id': str(group.id),
+    })
+    assert resp.status_code == status.HTTP_404_NOT_FOUND
+
+
+@pytest.mark.usefixtures('fastapi_app', 'test_client')
 def test_student_endpoint_delete_student(
     fastapi_app: fastapi.FastAPI,
     test_client: TestClient,
