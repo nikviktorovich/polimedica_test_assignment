@@ -51,7 +51,7 @@ class GradeService:
 
     def update_grade(
         self,
-        grade_id: uuid.UUID,
+        instance: domain_models.Grade,
         student: university.modules.education.domain.models.Student,
         exam: domain_models.Exam,
         grade: int,
@@ -59,17 +59,13 @@ class GradeService:
     ) -> domain_models.Grade:
         """Обновляет информацию о существующей оценке
         
-        Исключения:
-            EntityNotFoundError: Если оценка с указанным ID не существует
-        
         Аргументы:
-            grade_id: Идентификатор записи оценки
+            instance: Экземпляр объекта оценки
             student: Экземпляр объекта студента
             exam: Экземпляр объекта экзамена
             grade: Оценка студента за экзамен
             created_at: Дата выставления оценки
         """
-        instance = self.repo.get(grade_id)
         instance.student = student
         instance.student_id = student.id
         instance.exam = exam

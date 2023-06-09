@@ -43,21 +43,22 @@ class StudentService:
 
     def update_student(
         self,
-        student_id: uuid.UUID,
+        instance: domain_models.Student,
         full_name: str,
         group: domain_models.Group,
     ) -> domain_models.Student:
         """Обновляет данные студента указанными
-        
-        Исключения:
-            EntityNotFoundError: Если студент с указанным id не найден
+
+        Аргументы:
+            instance: Экземпляр объекта студента
+            full_name: ФИО студента
+            group: Экземпляр объекта группы студента
         
         Возвращает:
             Обновленный экземпляр студента
         """
-        student = self.repo.get(student_id)
-        student.full_name = full_name
-        student.group = group
-        student.group_id = group.id
+        instance.full_name = full_name
+        instance.group = group
+        instance.group_id = group.id
 
-        return student
+        return instance

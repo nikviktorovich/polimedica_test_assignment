@@ -77,15 +77,16 @@ def update_grade(
     Аргументы:
         grade_id: Идентификатор оценки
     """
-    # В случае отсутствия студента или экзамена в репозитории
+    # В случае отсутствия оценки, студента или экзамена в репозитории
     # будет выброшено исключение
+    grade = uow.grades.get(grade_id)
     student = uow.students.get(grade_data.student_id)
     exam = uow.exams.get(grade_data.exam_id)
     created_at = grade_data.created_at or datetime.datetime.now().astimezone()
 
     grade_service = domain_services.GradeService(uow.grades)
     grade = grade_service.update_grade(
-        grade_id=grade_id,
+        instance=grade,
         student=student,
         exam=exam,
         grade=grade_data.grade,

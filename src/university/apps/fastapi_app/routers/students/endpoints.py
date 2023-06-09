@@ -95,13 +95,15 @@ def update_student(
     Аргументы:
         student_id: Идентификатор студента
     """
-    # В случае отсутствия группы в репозитории будет выброшено исключение
+    # В случае отсутствиястудента или группы в репозитории
+    # будет выброшено исключение
+    student = uow.students.get(student_id)
     group = uow.groups.get(group_id=student_data.group_id)
 
     # В случае отсутствия студента с указанным id будет выброшено исключение
     student_service = domain_services.StudentService(uow.students)
     student = student_service.update_student(
-        student_id=student_id,
+        instance=student,
         full_name=student_data.full_name,
         group=group,
     )
