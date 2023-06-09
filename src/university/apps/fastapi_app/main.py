@@ -8,6 +8,7 @@ from fastapi import status
 import university.common.errors
 import university.apps.fastapi_app.routers.courses
 import university.apps.fastapi_app.routers.students
+import university.apps.fastapi_app.routers.teachers
 import university.database.mappers
 
 
@@ -43,3 +44,4 @@ def global_exception_handler(request: fastapi.Request, exception: Exception):
 
 app.include_router(university.apps.fastapi_app.routers.courses.router)
 app.include_router(university.apps.fastapi_app.routers.students.router)
+app.include_router(university.apps.fastapi_app.routers.teachers.router)

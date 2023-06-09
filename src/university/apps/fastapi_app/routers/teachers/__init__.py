@@ -1,0 +1,1 @@
+from university.apps.fastapi_app.routers.teachers.endpoints import router
