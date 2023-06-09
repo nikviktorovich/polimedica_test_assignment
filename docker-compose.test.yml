@@ -12,7 +12,10 @@ services:
     ports:
       - 5432:5432
     healthcheck:
-      test: pg_isready -U postgres
+      test: ["CMD-SHELL", "pg_isready -d ${POSTGRES_DB} -U ${POSTGRES_USER}"]
+      interval: 3s
+      timeout: 3s
+      retries: 5
 
   university_app:
     container_name: university_app
@@ -28,4 +31,5 @@ services:
     volumes:
       - ./tests:/code/tests
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
